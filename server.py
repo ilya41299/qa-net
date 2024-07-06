@@ -11,9 +11,9 @@ def run_server(host, port):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind((host, port))
         s.listen()
-        conn, addr = s.accept()
-        with conn:
-            while True:
+        while True:
+            conn, addr = s.accept()
+            with conn:
                 data = conn.recv(1024).decode()
                 if data == "bye":
                     break
@@ -71,7 +71,6 @@ def run_server(host, port):
                 conn.sendall(response_headers_raw.encode())
                 conn.sendall(b"\n")
                 conn.sendall(response_body_raw.encode())
-                conn, addr = s.accept()
 
 
 run_server(HOST, PORT)
